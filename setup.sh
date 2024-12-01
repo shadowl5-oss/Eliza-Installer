@@ -59,23 +59,23 @@ git checkout "${LATEST_TAG}"
 
 # Copy the example .env file to the active configuration file
 echo "Copying the example .env file..."
-cp ~/eliza/.env.example ~/eliza/.env
+cp ~/Eliza-Installer/eliza/.env.example ~/Eliza-Installer/eliza/.env
 
 # Edit the .env file
 echo "Editing .env file. Please make necessary changes."
-nano ~/eliza/.env
+nano ~/Eliza-Installer/eliza/.env
 
 # Edit the custom character file
 echo "Editing custom character file..."
-nano ~/eliza/characters/"$CHARACTER_NAME".character.json
+nano ~/Eliza-Installer/eliza/characters/"$CHARACTER_NAME".character.json
 
 # Create character directory in agent folder
 echo "Creating character directory in agent folder..."
-mkdir -p ~/eliza/agent/characters/
+mkdir -p ~/Eliza-Installer/eliza/agent/characters/
 
 # Copy character into new character folder
 echo "Copying character into the new character folder..."
-cp ~/eliza/characters/"$CHARACTER_NAME".character.json ~/eliza/agent/characters/"$CHARACTER_NAME".character.json
+cp ~/Eliza-Installer/eliza/characters/"$CHARACTER_NAME".character.json ~/Eliza-Installer/eliza/agent/characters/"$CHARACTER_NAME".character.json
 
 # Load NVM environment again
 echo "Loading NVM environment..."
