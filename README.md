@@ -31,25 +31,17 @@ This guide will walk you through the installation and setup of the Eliza chatbot
    
    This will install all necessary dependencies and prompt you to name your character, edit the ENV file, create a character file and then run the rest of the install loading the default character.
 
-9. **Exit the bot**:
+4. **Exit the bot**:
    ```bash
    exit
    ```
 
-10. **Navigate into the Eliza directory**:
+5. **Navigate into the Eliza directory**:
     ```bash
     cd eliza
-    ```
-
-11. **Load NVM environment**:
-     ```bash
     echo "Loading NVM environment..."
     export NVM_DIR="${XDG_CONFIG_HOME:-$HOME}/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-    ```
-     
-12. **Start Eliza with your custom character**:
-    ```bash
     pnpm start --characters="characters/YOUR_CHARACTER.character.json"
     ```
 
