@@ -19,36 +19,16 @@ This guide will walk you through the installation and setup of the Eliza chatbot
    sudo su
    ```
 
-3. **Navigate to your home directory**:
+3. **Clone and run the setup**:
    ```bash
    cd ~
-   ```
-
-4. **Install Git**:
-   ```bash
    apt install -y git
-   ```
-   
-5. **Clone the Eliza-Installer repository** from GitHub:
-   ```bash
    git clone https://github.com/HowieDuhzit/Eliza-Installer.git
-   ```
-
-6. **Navigate into the cloned directory**:
-   ```bash
    cd Eliza-Installer
-   ```
-
-7. **Make the `setup.sh` script executable**:
-   ```bash
    chmod +x setup.sh
-   ```
-
-8. **Run the setup script** to install the Eliza chatbot:
-   ```bash
    ./setup.sh
    ```
-
+   
    This will install all necessary dependencies and prompt you to name your character, edit the ENV file, create a character file and then run the rest of the install loading the default character.
 
 9. **Exit the bot**:
