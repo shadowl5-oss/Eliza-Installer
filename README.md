@@ -14,66 +14,66 @@ This guide will walk you through the installation and setup of the Eliza chatbot
    wsl --install debian
    ```
 
-1. **Once the installation is complete and Debian boots up, install git:
-   ```bash
-   sudo apt install -y git
-   ```
-
-2. **Become the root user:
+2. **Once the installation is complete and Debian boots up, become the root user:
    ```bash
    sudo su
    ```
 
-3. **Navigate to your home directory**:
+3. **Install Git:
+   ```bash
+   sudo apt install -y git
+   ```
+
+4. **Navigate to your home directory**:
    ```bash
    cd ~
    ```
 
-4. **Clone the Eliza-Installer repository** from GitHub:
+5. **Clone the Eliza-Installer repository** from GitHub:
    ```bash
    git clone https://github.com/HowieDuhzit/Eliza-Installer.git
    ```
 
-5. **Navigate into the cloned directory**:
+6. **Navigate into the cloned directory**:
    ```bash
    cd Eliza-Installer
    ```
 
-6. **Make the `setup.sh` script executable**:
+7. **Make the `setup.sh` script executable**:
    ```bash
    chmod +x setup.sh
    ```
 
-7. **Run the setup script** to install the Eliza chatbot:
+8. **Run the setup script** to install the Eliza chatbot:
    ```bash
    ./setup.sh
    ```
 
    This will install all necessary dependencies and configure the default Eliza character.
 
-8. **Exit the bot**:
+9. **Exit the bot**:
    ```bash
    exit
    ```
 
-9. **Copy the example `.env` file to the active configuration file**:
+10. **Copy the example `.env` file to the active configuration file**:
    ```bash
    cp ~/Eliza-Installer/eliza/.env.example ~/Eliza-Installer/eliza/.env
    ```
 
-10. **Edit the `.env` configuration file** using `nano` or your preferred text editor:
+11. **Edit the `.env` configuration file** using `nano` or your preferred text editor:
     ```bash
     nano ~/Eliza-Installer/eliza/.env
     ```
     Make the necessary changes to suit your environment.
 
-11. **Edit your custom character** by navigating to the `characters` folder:
+12. **Edit your custom character** by navigating to the `characters` folder:
     ```bash
     nano ~/Eliza-Installer/eliza/characters/YOUR_CHARACTER.character.json
     ```
     Customize the character according to your preferences.
 
-12. **Start Eliza with your custom character**:
+13. **Start Eliza with your custom character**:
     ```bash
     pnpm start --characters="~/Eliza-Installer/eliza/characters/YOUR_CHARACTER.character.json"
     ```
