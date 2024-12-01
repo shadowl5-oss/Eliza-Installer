@@ -22,11 +22,8 @@ This guide will walk you through the installation and setup of the Eliza chatbot
 3. **Clone and run the setup**:
    ```bash
    cd ~
-   apt install -y git
-   git clone https://github.com/HowieDuhzit/Eliza-Installer.git
-   cd Eliza-Installer
-   chmod +x setup.sh
-   ./setup.sh
+   apt install -y curl
+   curl -o- https://raw.githubusercontent.com/HowieDuhzit/Eliza-Installer/refs/heads/main/setup.sh | bash
    ```
    
    This will install all necessary dependencies and prompt you to name your character, edit the ENV file, create a character file and then run the rest of the install loading the default character.
