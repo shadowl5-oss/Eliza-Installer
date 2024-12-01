@@ -87,7 +87,7 @@ This guide will walk you through the installation and setup of the Eliza chatbot
 
 15. **Start Eliza with your custom character**:
     ```bash
-    pnpm start --characters="~/Eliza-Installer/eliza/characters/YOUR_CHARACTER.character.json"
+    pnpm start --characters="characters/YOUR_CHARACTER.character.json"
     ```
 
     This will start the Eliza chatbot using your customized character.
