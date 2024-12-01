@@ -67,7 +67,7 @@ This guide will walk you through the installation and setup of the Eliza chatbot
     ```
     Make the necessary changes to suit your environment.
 
-12. **Edit your custom character** using `nano` or your preferred text editor(Change YOUR_CHARACTER to the name you want):
+12. **Edit your custom character** using `nano` or your preferred text editor (Change YOUR_CHARACTER to the name you want):
     ```bash
     nano ~/Eliza-Installer/eliza/characters/YOUR_CHARACTER.character.json
     ```
