@@ -1,4 +1,4 @@
-# [https://github.com/ai16z/eliza](Eliza) Chatbot Setup Guide
+# [Eliza](https://github.com/ai16z/eliza) Chatbot Setup Guide
 ```markdown
 
 
