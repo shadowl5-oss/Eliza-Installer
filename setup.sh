@@ -16,10 +16,6 @@ sudo apt update && sudo apt upgrade -y
 echo "Installing curl if not already installed..."
 sudo apt install -y curl
 
-# Ensure git is installed
-echo "Installing git if not already installed..."
-sudo apt install -y git
-
 # Ensure python3 is installed
 echo "Installing Python3 if not already installed..."
 sudo apt install -y python3 python3-pip
