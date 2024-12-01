@@ -1,6 +1,4 @@
 # [Eliza](https://github.com/ai16z/eliza) Chatbot Setup Guide
-```markdown
-
 
 This guide will walk you through the installation and setup of the Eliza chatbot on a Debian-based WSL (Windows Subsystem for Linux) system.
 
@@ -16,7 +14,12 @@ This guide will walk you through the installation and setup of the Eliza chatbot
    wsl --install debian
    ```
 
-2. Once the installation is complete and Debian boots up, become the root user:
+1. **Once the installation is complete and Debian boots up, install git:
+   ```bash
+   sudo apt install -y git
+   ```
+
+2. **Become the root user:
    ```bash
    sudo su
    ```
