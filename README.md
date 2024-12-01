@@ -21,7 +21,7 @@ This guide will walk you through the installation and setup of the Eliza chatbot
 
 3. **Install Git**:
    ```bash
-   sudo apt install -y git
+   apt install -y git
    ```
 
 4. **Navigate to your home directory**:
