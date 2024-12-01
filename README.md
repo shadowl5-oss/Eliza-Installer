@@ -14,12 +14,12 @@ This guide will walk you through the installation and setup of the Eliza chatbot
    wsl --install debian
    ```
 
-2. **Once the installation is complete and Debian boots up, become the root user:
+2. **Once the installation is complete and Debian boots up, become the root user**:
    ```bash
    sudo su
    ```
 
-3. **Install Git:
+3. **Install Git**:
    ```bash
    sudo apt install -y git
    ```
