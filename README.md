@@ -19,16 +19,16 @@ This guide will walk you through the installation and setup of the Eliza chatbot
    sudo su
    ```
 
-3. **Install Git**:
-   ```bash
-   apt install -y git
-   ```
-
-4. **Navigate to your home directory**:
+3. **Navigate to your home directory**:
    ```bash
    cd ~
    ```
 
+4. **Install Git**:
+   ```bash
+   apt install -y git
+   ```
+   
 5. **Clone the Eliza-Installer repository** from GitHub:
    ```bash
    git clone https://github.com/HowieDuhzit/Eliza-Installer.git
@@ -49,52 +49,26 @@ This guide will walk you through the installation and setup of the Eliza chatbot
    ./setup.sh
    ```
 
-   This will install all necessary dependencies and configure the default Eliza character.
+   This will install all necessary dependencies and prompt you to name your character, edit the ENV file, create a character file and then run the rest of the install loading the default character.
 
 9. **Exit the bot**:
    ```bash
    exit
    ```
 
-10. **Copy the example `.env` file to the active configuration file**:
-   ```bash
-   cp ~/Eliza-Installer/eliza/.env.example ~/Eliza-Installer/eliza/.env
-   ```
-
-11. **Edit the `.env` configuration file** using `nano` or your preferred text editor:
-    ```bash
-    nano ~/Eliza-Installer/eliza/.env
-    ```
-    Make the necessary changes to suit your environment.
-
-12. **Edit your custom character** using `nano` or your preferred text editor (Change YOUR_CHARACTER to the name you want):
-    ```bash
-    nano ~/Eliza-Installer/eliza/characters/YOUR_CHARACTER.character.json
-    ```
-    Customize the character according to your preferences.
-
-13. **Navigate into the Eliza directory**:
+10. **Navigate into the Eliza directory**:
     ```bash
     cd eliza
     ```
 
-14. **Create character directory in agent folder**:
-    ```bash
-    mkdir ~/Eliza-Installer/eliza/agent/characters/
-    ```
-
-15. **Copy character into new character folder**:
-    ```bash
-    cp ~/Eliza-Installer/eliza/characters/YOUR_CHARACTER.character.json ~/Eliza-Installer/eliza/agent/characters/YOUR_CHARACTER.character.json
-    ```
-16. **Load NVM environment**:
+11. **Load NVM environment**:
      ```bash
     echo "Loading NVM environment..."
     export NVM_DIR="${XDG_CONFIG_HOME:-$HOME}/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
     ```
      
-17. **Start Eliza with your custom character**:
+12. **Start Eliza with your custom character**:
     ```bash
     pnpm start --characters="characters/YOUR_CHARACTER.character.json"
     ```
