@@ -47,7 +47,7 @@ This guide will walk you through the installation and setup of the Eliza chatbot
 
    This will install all necessary dependencies and configure the default Eliza character.
 
-8. **Exit root user mode**:
+8. **Exit the bot**:
    ```bash
    exit
    ```
