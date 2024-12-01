@@ -67,7 +67,7 @@ This guide will walk you through the installation and setup of the Eliza chatbot
     ```
     Make the necessary changes to suit your environment.
 
-12. **Edit your custom character** by navigating to the `characters` folder:
+12. **Edit your custom character** using `nano` or your preferred text editor(Change YOUR_CHARACTER to the name you want):
     ```bash
     nano ~/Eliza-Installer/eliza/characters/YOUR_CHARACTER.character.json
     ```
@@ -79,13 +79,13 @@ This guide will walk you through the installation and setup of the Eliza chatbot
     export NVM_DIR="${XDG_CONFIG_HOME:-$HOME}/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
     ```
+
 14. **Navigate into the Eliza directory**:
     ```bash
     cd eliza
     ```
 
-
-14. **Start Eliza with your custom character**:
+15. **Start Eliza with your custom character**:
     ```bash
     pnpm start --characters="~/Eliza-Installer/eliza/characters/YOUR_CHARACTER.character.json"
     ```
