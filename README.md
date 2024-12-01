@@ -73,7 +73,19 @@ This guide will walk you through the installation and setup of the Eliza chatbot
     ```
     Customize the character according to your preferences.
 
-13. **Start Eliza with your custom character**:
+13. **Load NVM environment**:
+     ```bash
+    echo "Loading NVM environment..."
+    export NVM_DIR="${XDG_CONFIG_HOME:-$HOME}/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+    ```
+14. **Navigate into the Eliza directory**:
+    ```bash
+    cd eliza
+    ```
+
+
+14. **Start Eliza with your custom character**:
     ```bash
     pnpm start --characters="~/Eliza-Installer/eliza/characters/YOUR_CHARACTER.character.json"
     ```
