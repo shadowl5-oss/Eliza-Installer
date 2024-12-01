@@ -1,11 +1,11 @@
 # [Eliza](https://github.com/ai16z/eliza) Chatbot Setup Guide
 
-This guide will walk you through the installation and setup of the Eliza chatbot on a Debian-based WSL (Windows Subsystem for Linux) system.
+This guide will walk you through the installation and setup of the Eliza chatbot on a Debian-based WSL (Windows Subsystem for Linux) system or bare metal Debian install.
 
 ## Prerequisites
 
-- **WSL (Windows Subsystem for Linux)** installed on your Windows machine.
-- **Debian** distribution for WSL.
+- **WSL (Windows Subsystem for Linux)** capable Windows machine.
+- **Debian** distribution on bare metal.
 
 ## Installation Steps
 
