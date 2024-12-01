@@ -59,7 +59,7 @@ git checkout "${LATEST_TAG}"
 
 # Copy the example .env file to the active configuration file
 echo "Copying the example .env file..."
-cp ~/eliza/.env.example ~/Eliza-Installer/eliza/.env
+cp ~/eliza/.env.example ~/eliza/.env
 
 # Edit the .env file
 echo "Editing .env file. Please make necessary changes."
