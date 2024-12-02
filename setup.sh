@@ -10,7 +10,7 @@ NODE_VERSION="23.3.0"
 REPO_URL="https://github.com/ai16z/eliza.git"
 CHARACTER_NAME="YOUR_CHARACTER"
 
-apt install -y curl
+apt install -y curl gnupg2
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
 echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
