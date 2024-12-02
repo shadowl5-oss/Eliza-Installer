@@ -39,7 +39,6 @@ This guide will walk you through the installation and setup of the Eliza chatbot
 5. **Navigate into the Eliza directory**:
     ```bash
     cd eliza
-    echo "Loading NVM environment..."
     export NVM_DIR="${XDG_CONFIG_HOME:-$HOME}/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
     pnpm start --characters="characters/YOUR_CHARACTER.character.json"
