@@ -48,7 +48,7 @@ This guide will walk you through the installation and setup of the Eliza chatbot
 
 ## Additional Notes
 
-- If you need to make further customizations, you can modify the `.env` file and the individual character JSON files located in `~/Eliza-Installer/eliza/agent/characters/`.
+- If you need to make further customizations, you can modify the `.env` file and the individual character JSON files located in `~/Eliza-Installer/eliza/characters/`.
 - To stop the Eliza chatbot, press `Ctrl+C` in the terminal.
 
 ## Troubleshooting
