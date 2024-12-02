@@ -75,11 +75,15 @@ cp ~/Eliza-Installer/eliza/.env.example ~/Eliza-Installer/eliza/.env
 
 # Edit the .env file
 clear && display_status "Editing .env file. Please make necessary changes."
-cat ~/Eliza-Installer/eliza/.env.example | gum write --width=0 --placeholder="Create .env..." --char-limit=0 > ~/Eliza-Installer/eliza/.env
+nano ~/Eliza-Installer/eliza/.env
+
+# Copy Trump character file to the new character file
+clear && display_status "Copying the example character file..."
+cp ~/Eliza-Installer/eliza/characters/trump.character.json ~/Eliza-Installer/eliza/.env ~/Eliza-Installer/eliza/characters/"$CHARACTER_NAME".character.json
 
 # Edit the custom character file
 clear && display_status "Editing custom character file..."
-cat ~/Eliza-Installer/eliza/characters/trump.character.json | gum write --width=0 --placeholder="Create Character..." --char-limit=0 > ~/Eliza-Installer/eliza/characters/"$CHARACTER_NAME".character.json
+nano ~/Eliza-Installer/eliza/characters/"$CHARACTER_NAME".character.json
 
 # Create character directory in agent folder
 clear && display_status "Creating character directory in agent folder..."
