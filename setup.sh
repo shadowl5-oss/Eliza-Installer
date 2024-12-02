@@ -79,7 +79,8 @@ nano ~/Eliza-Installer/eliza/.env
 
 # Copy Trump character file to the new character file
 clear && display_status "Copying the example character file..."
-cp ~/Eliza-Installer/eliza/characters/trump.character.json ~/Eliza-Installer/eliza/.env ~/Eliza-Installer/eliza/characters/"$CHARACTER_NAME".character.json
+touch ~/Eliza-Installer/eliza/characters/"$CHARACTER_NAME".character.json
+cp ~/Eliza-Installer/eliza/characters/trump.character.json ~/Eliza-Installer/eliza/characters/"$CHARACTER_NAME".character.json
 
 # Edit the custom character file
 clear && display_status "Editing custom character file..."
