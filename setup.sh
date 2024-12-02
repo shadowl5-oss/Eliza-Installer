@@ -97,9 +97,3 @@ export NVM_DIR="${XDG_CONFIG_HOME:-$HOME}/.nvm"
 # Start the application
 clear && display_status "Starting the application..."
 sh scripts/start.sh
-
-# Start Eliza with the custom character
-clear && display_status "Starting Eliza with custom character..."
-pnpm start --characters="characters/$CHARACTER_NAME.character.json"
-
-gum style --foreground 2 "Eliza has been started with your custom character."
