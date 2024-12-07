@@ -4,7 +4,7 @@ This guide will walk you through the installation and setup of the Eliza chatbot
 
 ## Prerequisites
 
-- **WSL (Windows Subsystem for Linux)** capable Windows machine.
+- **WSL 2 (Windows Subsystem for Linux)** capable Windows machine. https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
 - **Debian** distribution on bare metal.
 
 ## Installation Steps
