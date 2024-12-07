@@ -12,7 +12,7 @@ This guide will walk you through the installation and setup of the Eliza chatbot
 1. **Open Command Prompt** and install Debian on WSL by running the following command:
      (Skip this if you are running Debian bare metal)
    ```bash
-   wsl --install debian
+   wsl --install -d debian
    ```
 
 2. **Once the installation is complete and Debian boots up, become the root user**:
