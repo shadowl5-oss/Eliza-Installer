@@ -9,7 +9,7 @@ The installer will:
 2. Set up Node.js and pnpm if not present
 3. Clone the Eliza repository
 4. Set up the environment
-5. Build and start the Eliza chatbot
+5. Build and start the Eliza chatbot in a stylized tmux session
 
 ## Prerequisites
 
@@ -20,10 +20,9 @@ The installer will:
 If using WSL2 on Windows, make sure you have it installed and set up:
 1. Open PowerShell as Administrator and run:
    ```powershell
-   wsl
+   wsl --install
    ```
 2. Restart your computer if prompted
-
 
 ## Installation
 
@@ -36,11 +35,18 @@ chmod +x setup.sh
 
 ## Usage
 
-After installation, you can start Eliza by running:
-```bash
-cd eliza
-pnpm start
-```
+The installer will automatically start Eliza in a tmux session with the following layout:
+- Window 1: Split view with server and client processes
+- Window 2: System monitoring with htop
+
+### Tmux Controls
+- `Ctrl-a` is the prefix key
+- `Ctrl-a d` to detach from the session
+- `tmux attach-session -t eliza` to reattach
+- `Ctrl-a c` to create a new window
+- `Ctrl-a n` to switch to next window
+- `Ctrl-a p` to switch to previous window
+- Mouse support is enabled for easy pane selection and scrolling
 
 The chatbot will be available at `http://localhost:5173` in your web browser.
 
@@ -63,6 +69,12 @@ The chatbot will be available at `http://localhost:5173` in your web browser.
 - For WSL-specific issues, make sure you're using WSL2:
   ```powershell
   wsl --set-version Ubuntu 2
+  ```
+- If the tmux session crashes, you can restart it with:
+  ```bash
+  tmux kill-session -t eliza
+  cd eliza
+  pnpm start & pnpm start:client &
   ```
 
 ## Contributing
