@@ -107,7 +107,7 @@ build_and_start() {
     tmux send-keys -t "$TMUX_SESSION" "export NVM_DIR=\"$HOME/.nvm\"" C-m
     tmux send-keys -t "$TMUX_SESSION" "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"" C-m
     tmux send-keys -t "$TMUX_SESSION" "nvm use eliza" C-m
-    tmux send-keys -t "$TMUX_SESSION" "pnpm start & pnpm start:client" C-m
+    tmux send-keys -t "$TMUX_SESSION" "pnpm start" C-m
 
     sleep 5
 
