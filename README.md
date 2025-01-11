@@ -1,6 +1,6 @@
 # Eliza Installer
 
-A CLI tool to easily install and set up the [Eliza](https://github.com/elizaOS/eliza) chatbot in a persistent tmux session on Linux systems.
+A CLI tool to easily install and set up the [Eliza](https://github.com/elizaOS/eliza) chatbot on Linux systems.
 
 ## Prerequisites
 
@@ -11,7 +11,6 @@ Before installation, ensure you have:
 - **Sudo privileges**: Required for installing system dependencies
 
 The installer will automatically set up:
-- Tmux (for persistent session)
 - Node.js (v23.3.0)
 - pnpm (v9.0.0 or higher)
 - Python3, Make, FFmpeg, and other required dependencies
@@ -36,31 +35,21 @@ chmod +x setup.sh
 ## What it Does
 
 The installer will:
-1. Create a persistent tmux session named 'eliza'
-2. Check and install required system dependencies
-3. Set up Node.js and pnpm if not present
-4. Clone the Eliza repository
-5. Set up the environment
-6. Build and start the Eliza chatbot
+1. Check and install required system dependencies
+2. Set up Node.js and pnpm if not present
+3. Clone the Eliza repository
+4. Set up the environment
+5. Build and start the Eliza chatbot
 
 ## Usage
 
-The chatbot runs in a persistent tmux session. Here are the basic commands:
+After installation, you can start Eliza by running:
+```bash
+cd eliza
+pnpm start
+```
 
-- **Attach to Eliza session:**
-  ```bash
-  tmux attach -t eliza
-  ```
-
-- **Detach from session (keeps running):**
-  Press `Ctrl+b` then `d`
-
-- **View all sessions:**
-  ```bash
-  tmux ls
-  ```
-
-The chatbot will be available at `http://localhost:5173` in your web browser, even after you detach from the tmux session.
+The chatbot will be available at `http://localhost:5173` in your web browser.
 
 ## Customization
 
@@ -68,8 +57,6 @@ The chatbot will be available at `http://localhost:5173` in your web browser, ev
 - Character files are located in `eliza/characters/`
 - To use a custom character:
   ```bash
-  tmux attach -t eliza
-  # Then in the tmux session:
   pnpm start --characters="characters/YOUR_CHARACTER.character.json"
   ```
 
@@ -83,10 +70,6 @@ The chatbot will be available at `http://localhost:5173` in your web browser, ev
 - For WSL-specific issues, make sure you're using WSL2:
   ```powershell
   wsl --set-version Ubuntu 2
-  ```
-- If tmux session is not found:
-  ```bash
-  ./setup.sh  # This will create a new session
   ```
 
 ## Contributing
