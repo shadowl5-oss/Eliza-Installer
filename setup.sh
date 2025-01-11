@@ -22,8 +22,21 @@ install_gum() {
 }
 show_welcome() {
     clear
+    cat << "EOF"
+Welcome to
+EEEEEE LL   IIII ZZZZZZ AAAAA
+EE     LL    II     ZZ  AA  AA
+EEEE   LL    II   ZZZ   AAAAAA
+EE     LL    II   ZZ    AA  AA
+EEEEEE LLLLL IIII ZZZZZZ AA  AA
+
+Eliza is a mock Rogerian psychotherapist.
+The original program was described by Joseph Weizenbaum in 1966.
+This implementation by Norbert Landsteiner 2005.
+EOF
+    echo
     gum style --border double --align center --width 50 --margin "1 2" --padding "1 2" \
-        "Welcome to Eliza Installation" "" "This script will set up Eliza for you"
+        "Installation Setup" "" "This script will set up Eliza for you"
 }
 install_dependencies() {
     gum spin --spinner dot --title "Installing system dependencies..." -- \
