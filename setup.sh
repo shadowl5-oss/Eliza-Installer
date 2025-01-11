@@ -46,4 +46,44 @@ cp ~/Eliza-Installer/eliza/.env.example ~/Eliza-Installer/eliza/.env
 #export NVM_DIR="${XDG_CONFIG_HOME:-$HOME}/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 clear && display_status "Starting Eliza..."
-sh scripts/start.sh
+echo "\033[1mCleaning cache...\033[0m"
+if ! pnpm clean; then
+    echo "\033[1;31mFailed to clean cache.\033[0m"
+    exit 1
+fi
+echo "\033[1mInstalling dependencies...\033[0m"
+if ! pnpm install --no-frozen-lockfile; then
+    echo "\033[1;31mFailed to install dependencies.\033[0m"
+    exit 1
+fi
+
+# Build project
+echo "\033[1mBuilding project...\033[0m"
+if ! pnpm build; then
+    echo "\033[1;31mFailed to build project.\033[0m"
+    exit 1
+fi
+
+# Start project
+echo "\033[1mStarting project...\033[0m"
+if ! pnpm start; then
+    echo "\033[1;31mFailed to start project.\033[0m"
+    exit 1
+fi
+
+# Start client
+echo "\033[1mStarting client...\033[0m"
+if ! pnpm start:client; then
+    echo "\033[1;31mFailed to start client.\033[0m"
+    exit 1
+fi
+
+# Open webpage
+echo "\033[1mOpening webpage at http://localhost:5173...\033[0m"
+if command -v xdg-open >/dev/null 2>&1; then
+    xdg-open "http://localhost:5173"
+elif command -v open >/dev/null 2>&1; then
+    open "http://localhost:5173"
+else
+    echo "\033[1;33mPlease open http://localhost:5173 in your browser.\033[0m"
+fi
