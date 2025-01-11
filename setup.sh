@@ -59,59 +59,6 @@ EOL
     log_success "Tmux configuration created"
 }
 
-start_tmux_session() {
-    # Kill existing session if it exists
-    tmux kill-session -t eliza 2>/dev/null || true
-    
-    # Export NVM directory
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    
-    # Start a new session
-    tmux new-session -d -s eliza
-    
-    # Rename the first window
-    tmux rename-window -t eliza:0 'Eliza'
-    
-    # Make sure we're in the first window
-    tmux select-window -t eliza:0
-    
-    # Send commands to the first pane
-    tmux send-keys -t eliza:0.0 "cd $(pwd)/eliza" C-m
-    tmux send-keys -t eliza:0.0 "export NVM_DIR=\"\$HOME/.nvm\"" C-m
-    tmux send-keys -t eliza:0.0 "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"" C-m
-    tmux send-keys -t eliza:0.0 "clear" C-m
-    
-    # Create a horizontal split
-    tmux split-window -h -t eliza:0
-    
-    # Send commands to the second pane
-    tmux send-keys -t eliza:0.1 "cd $(pwd)/eliza" C-m
-    tmux send-keys -t eliza:0.1 "export NVM_DIR=\"\$HOME/.nvm\"" C-m
-    tmux send-keys -t eliza:0.1 "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"" C-m
-    tmux send-keys -t eliza:0.1 "clear" C-m
-    
-    # Start the server in the first pane
-    tmux send-keys -t eliza:0.0 "echo 'Starting Eliza server...'" C-m
-    tmux send-keys -t eliza:0.0 "pnpm start" C-m
-    
-    # Start the client in the second pane
-    tmux send-keys -t eliza:0.1 "echo 'Starting Eliza client...'" C-m
-    tmux send-keys -t eliza:0.1 "sleep 2 && pnpm start:client" C-m
-    
-    # Create a new window for monitoring
-    tmux new-window -t eliza:1 -n "Monitor"
-    tmux send-keys -t eliza:1.0 "cd $(pwd)/eliza && htop" C-m
-    
-    # Select the first window
-    tmux select-window -t eliza:0
-    
-    log_success "Tmux session created"
-    
-    # Wait a bit for processes to start
-    sleep 3
-}
-
 install_gum() {
     if ! command -v gum &> /dev/null; then
         log_info "Installing gum for better UI..."
@@ -192,7 +139,7 @@ build_project() {
     log_success "Project built successfully"
 }
 
-main() {
+run_installer() {
     install_gum
     show_welcome
     
@@ -208,15 +155,34 @@ main() {
     clone_repository
     setup_environment
     build_project
-    start_tmux_session
 
+    # Start Eliza
+    pnpm start
+}
+
+main() {
+    # Kill existing session if it exists
+    tmux kill-session -t eliza 2>/dev/null || true
+    
+    # Start new tmux session
+    tmux new-session -d -s eliza -n Eliza
+    
+    # Run the installer in tmux
+    tmux send-keys -t eliza "cd $(pwd)" C-m
+    tmux send-keys -t eliza "./setup.sh --in-tmux" C-m
+
+    # Show instructions
     gum style --border double --align center --width 50 --margin "1 2" --padding "1 2" \
-        "🎉 Installation Complete!" "" "Eliza is now running at:" "http://localhost:5173" "" \
-        "To attach to the tmux session, run:" "tmux attach-session -t eliza" "" \
-        "Use Ctrl-a + d to detach from the session"
+        "🎉 Installation Started!" "" \
+        "The installation is running in a tmux session." "" \
+        "To view the installation progress, run:" "tmux attach-session -t eliza" "" \
+        "You can detach from the session with: Ctrl-a d" "" \
+        "Eliza will continue running after you detach."
 
-    # Attach to the tmux session
-    tmux attach-session -t eliza
+    # If we're already in tmux, run the installer directly
+    if [ "$1" = "--in-tmux" ]; then
+        run_installer
+    fi
 }
 
 main "$@"
