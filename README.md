@@ -1,67 +1,73 @@
-# [Eliza](https://github.com/ai16z/eliza) Chatbot Setup Guide
+# Eliza Installer
 
-This guide will walk you through the installation and setup of the Eliza chatbot on a Debian-based WSL (Windows Subsystem for Linux) system or bare metal Debian install.
+A CLI tool to easily install and set up the [Eliza](https://github.com/elizaOS/eliza) chatbot on Linux systems.
+
+## What it Does
+
+The installer will:
+1. Check and install required system dependencies
+2. Set up Node.js and pnpm if not present
+3. Clone the Eliza repository
+4. Set up the environment
+5. Build and start the Eliza chatbot
 
 ## Prerequisites
 
-- **WSL 2 (Windows Subsystem for Linux)** capable Windows machine. https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
-- **Debian** distribution on bare metal.
+- **Linux/WSL**: Works on any Debian-based Linux distribution or WSL2
+- **Node.js**: Version 23.0.0 or higher
+- **pnpm**: Version 9.0.0 or higher
 
-## Installation Steps
-
-1. **Open Command Prompt** and install Debian on WSL by running the following command:
-     (Skip this if you are running Debian bare metal)
-   ```bash
-   wsl --install -d debian
+If using WSL2 on Windows, make sure you have it installed and set up:
+1. Open PowerShell as Administrator and run:
+   ```powershell
+   wsl --install
    ```
+2. Restart your computer if prompted
 
-2. **Once the installation is complete and Debian boots up, become the root user**:
-   ```bash
-   sudo su
-   ```
 
-3. **Clone and run the setup**:
-   ```bash
-   cd ~
-   apt install -y git
-   git clone https://github.com/HowieDuhzit/Eliza-Installer.git
-   cd Eliza-Installer
-   chmod +x setup.sh
-   ./setup.sh
-   ```
-   
-   This will install all necessary dependencies and prompt you to name your character, edit the ENV file, create a character file and then run the rest of the install loading the default character.
+## Installation
 
-4. **Exit the bot**:
-   ```bash
-   exit
-   ```
+```bash
+git clone https://github.com/HowieDuhzit/Eliza-Installer.git
+cd Eliza-Installer
+chmod +x setup.sh
+./setup.sh
+```
 
-5. **Navigate into the Eliza directory**:
-    ```bash
-    cd eliza
-    export NVM_DIR="${XDG_CONFIG_HOME:-$HOME}/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-    pnpm start --characters="characters/YOUR_CHARACTER.character.json"
-    ```
+## Usage
 
-    This will start the Eliza chatbot using your customized character.
+After installation, you can start Eliza by running:
+```bash
+cd eliza
+pnpm start
+```
 
-## Additional Notes
+The chatbot will be available at `http://localhost:5173` in your web browser.
 
-- If you need to make further customizations, you can modify the `.env` file and the individual character JSON files located in `~/Eliza-Installer/eliza/characters/`.
-- To stop the Eliza chatbot, type `exit` in the terminal.
+## Customization
+
+- The `.env` file in the Eliza directory contains configuration options
+- Character files are located in `eliza/characters/`
+- To use a custom character:
+  ```bash
+  pnpm start --characters="characters/YOUR_CHARACTER.character.json"
+  ```
 
 ## Troubleshooting
 
-- If you encounter issues with `pnpm`, make sure all dependencies are installed correctly. You can install `pnpm` globally by running:
+- If you see dependency errors, try:
   ```bash
   npm install -g pnpm
+  pnpm install
+  ```
+- For WSL-specific issues, make sure you're using WSL2:
+  ```powershell
+  wsl --set-version Ubuntu 2
   ```
 
 ## Contributing
 
-Feel free to contribute to this project by opening issues or submitting pull requests to improve the Eliza chatbot or this installation guide.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
