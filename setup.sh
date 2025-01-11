@@ -67,47 +67,49 @@ start_tmux_session() {
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     
-    # Create a new session with a shell that will source nvm
-    tmux new-session -d -s eliza -n "Eliza"
-    sleep 1
+    # Start a new session
+    tmux new-session -d -s eliza
     
-    # Setup the environment in the first pane
-    tmux send-keys "export NVM_DIR=\"\$HOME/.nvm\"" C-m
-    tmux send-keys "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"" C-m
-    tmux send-keys "cd $(pwd)/eliza" C-m
-    tmux send-keys "clear" C-m
+    # Rename the first window
+    tmux rename-window -t eliza:0 'Eliza'
     
-    # Split the window horizontally
-    tmux split-window -h
+    # Make sure we're in the first window
+    tmux select-window -t eliza:0
     
-    # Setup the environment in the second pane
-    tmux select-pane -t 1
-    tmux send-keys "export NVM_DIR=\"\$HOME/.nvm\"" C-m
-    tmux send-keys "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"" C-m
-    tmux send-keys "cd $(pwd)/eliza" C-m
-    tmux send-keys "clear" C-m
+    # Send commands to the first pane
+    tmux send-keys -t eliza:0.0 "cd $(pwd)/eliza" C-m
+    tmux send-keys -t eliza:0.0 "export NVM_DIR=\"\$HOME/.nvm\"" C-m
+    tmux send-keys -t eliza:0.0 "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"" C-m
+    tmux send-keys -t eliza:0.0 "clear" C-m
+    
+    # Create a horizontal split
+    tmux split-window -h -t eliza:0
+    
+    # Send commands to the second pane
+    tmux send-keys -t eliza:0.1 "cd $(pwd)/eliza" C-m
+    tmux send-keys -t eliza:0.1 "export NVM_DIR=\"\$HOME/.nvm\"" C-m
+    tmux send-keys -t eliza:0.1 "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"" C-m
+    tmux send-keys -t eliza:0.1 "clear" C-m
     
     # Start the server in the first pane
-    tmux select-pane -t 0
-    tmux send-keys "echo 'Starting Eliza server...'" C-m
-    tmux send-keys "pnpm start" C-m
+    tmux send-keys -t eliza:0.0 "echo 'Starting Eliza server...'" C-m
+    tmux send-keys -t eliza:0.0 "pnpm start" C-m
     
     # Start the client in the second pane
-    tmux select-pane -t 1
-    tmux send-keys "echo 'Starting Eliza client...'" C-m
-    tmux send-keys "sleep 2 && pnpm start:client" C-m
+    tmux send-keys -t eliza:0.1 "echo 'Starting Eliza client...'" C-m
+    tmux send-keys -t eliza:0.1 "sleep 2 && pnpm start:client" C-m
     
     # Create a new window for monitoring
-    tmux new-window -n "Monitor"
-    tmux send-keys "cd $(pwd)/eliza && htop" C-m
+    tmux new-window -t eliza:1 -n "Monitor"
+    tmux send-keys -t eliza:1.0 "cd $(pwd)/eliza && htop" C-m
     
     # Select the first window
-    tmux select-window -t 1
+    tmux select-window -t eliza:0
     
     log_success "Tmux session created"
     
     # Wait a bit for processes to start
-    sleep 2
+    sleep 3
 }
 
 install_gum() {
