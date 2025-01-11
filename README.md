@@ -1,28 +1,28 @@
 # Eliza Installer
 
-A CLI tool to easily install and set up the [Eliza](https://github.com/elizaOS/eliza) chatbot on Linux systems.
-
-## What it Does
-
-The installer will:
-1. Check and install required system dependencies
-2. Set up Node.js and pnpm if not present
-3. Clone the Eliza repository
-4. Set up the environment
-5. Build and start the Eliza chatbot in a stylized tmux session
+A CLI tool to easily install and set up the [Eliza](https://github.com/elizaOS/eliza) chatbot in a persistent tmux session on Linux systems.
 
 ## Prerequisites
 
-- **Linux/WSL**: Works on any Debian-based Linux distribution or WSL2
-- **Node.js**: Version 23.0.0 or higher
-- **pnpm**: Version 9.0.0 or higher
+Before installation, ensure you have:
 
-If using WSL2 on Windows, make sure you have it installed and set up:
+- **Linux/WSL**: A Debian-based Linux distribution or WSL2
+- **Git**: For cloning the repository
+- **Sudo privileges**: Required for installing system dependencies
+
+The installer will automatically set up:
+- Tmux (for persistent session)
+- Node.js (v23.3.0)
+- pnpm (v9.0.0 or higher)
+- Python3, Make, FFmpeg, and other required dependencies
+
+If using WSL2 on Windows:
 1. Open PowerShell as Administrator and run:
    ```powershell
    wsl --install
    ```
 2. Restart your computer if prompted
+3. Open WSL and proceed with installation
 
 ## Installation
 
@@ -33,22 +33,34 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
+## What it Does
+
+The installer will:
+1. Create a persistent tmux session named 'eliza'
+2. Check and install required system dependencies
+3. Set up Node.js and pnpm if not present
+4. Clone the Eliza repository
+5. Set up the environment
+6. Build and start the Eliza chatbot
+
 ## Usage
 
-The installer will automatically start Eliza in a tmux session with the following layout:
-- Window 1: Split view with server and client processes
-- Window 2: System monitoring with htop
+The chatbot runs in a persistent tmux session. Here are the basic commands:
 
-### Tmux Controls
-- `Ctrl-a` is the prefix key
-- `Ctrl-a d` to detach from the session
-- `tmux attach-session -t eliza` to reattach
-- `Ctrl-a c` to create a new window
-- `Ctrl-a n` to switch to next window
-- `Ctrl-a p` to switch to previous window
-- Mouse support is enabled for easy pane selection and scrolling
+- **Attach to Eliza session:**
+  ```bash
+  tmux attach -t eliza
+  ```
 
-The chatbot will be available at `http://localhost:5173` in your web browser.
+- **Detach from session (keeps running):**
+  Press `Ctrl+b` then `d`
+
+- **View all sessions:**
+  ```bash
+  tmux ls
+  ```
+
+The chatbot will be available at `http://localhost:5173` in your web browser, even after you detach from the tmux session.
 
 ## Customization
 
@@ -56,6 +68,8 @@ The chatbot will be available at `http://localhost:5173` in your web browser.
 - Character files are located in `eliza/characters/`
 - To use a custom character:
   ```bash
+  tmux attach -t eliza
+  # Then in the tmux session:
   pnpm start --characters="characters/YOUR_CHARACTER.character.json"
   ```
 
@@ -70,11 +84,9 @@ The chatbot will be available at `http://localhost:5173` in your web browser.
   ```powershell
   wsl --set-version Ubuntu 2
   ```
-- If the tmux session crashes, you can restart it with:
+- If tmux session is not found:
   ```bash
-  tmux kill-session -t eliza
-  cd eliza
-  pnpm start & pnpm start:client &
+  ./setup.sh  # This will create a new session
   ```
 
 ## Contributing

@@ -4,6 +4,7 @@ set -o pipefail
 NVM_VERSION="v0.39.1"
 NODE_VERSION="23.3.0"
 REPO_URL="https://github.com/elizaOS/eliza"
+TMUX_SESSION="eliza"
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'
 NC='\033[0m'; BOLD='\033[1m'
 log_error() { gum style --foreground 1 "❌ ${1}"; }
@@ -11,53 +12,6 @@ log_success() { gum style --foreground 2 "✅ ${1}"; }
 log_info() { gum style --foreground 4 "ℹ️  ${1}"; }
 handle_error() { log_error "Error occurred in: $1"; log_error "Exit code: $2"; exit 1; }
 trap 'handle_error "${BASH_SOURCE[0]}:${LINENO}" $?' ERR
-
-setup_tmux() {
-    if ! command -v tmux &> /dev/null; then
-        log_info "Installing tmux..."
-        sudo apt install -y tmux
-    fi
-
-    # Create tmux config
-    cat > ~/.tmux.conf << 'EOL'
-# Set prefix to Ctrl-a
-set -g prefix C-a
-unbind C-b
-bind C-a send-prefix
-
-# Enable mouse control
-set -g mouse on
-
-# Start window numbering at 1
-set -g base-index 1
-setw -g pane-base-index 1
-
-# Status bar styling
-set -g status-style bg=black,fg=white
-set -g status-left "#[fg=green]ELIZA #[fg=white]| "
-set -g status-right "#[fg=cyan]%d %b %Y #[fg=white]| #[fg=cyan]%H:%M"
-set -g status-justify centre
-
-# Window styling
-setw -g window-status-current-style bg=green,fg=black
-setw -g window-status-style bg=black,fg=white
-
-# Pane styling
-set -g pane-border-style fg=green
-set -g pane-active-border-style fg=cyan
-
-# Set terminal to 256 colors
-set -g default-terminal "screen-256color"
-
-# Easy config reload
-bind r source-file ~/.tmux.conf \; display-message "Config reloaded!"
-
-# Better split commands
-bind | split-window -h
-bind - split-window -v
-EOL
-    log_success "Tmux configuration created"
-}
 
 install_gum() {
     if ! command -v gum &> /dev/null; then
@@ -81,7 +35,7 @@ Welcome to
  EEEEEE LLLLL IIII ZZZZZZZ AA  AA
 
 Eliza is an open-source AI agent.
-     Createdby ai16z 2024.
+     Created by ai16z 2024.
 EOF
     echo
     gum style --border double --align center --width 50 --margin "1 2" --padding "1 2" \
@@ -90,7 +44,7 @@ EOF
 
 install_dependencies() {
     gum spin --spinner dot --title "Installing system dependencies..." -- \
-        sudo apt update && sudo apt install -y git curl python3 python3-pip make ffmpeg htop
+        sudo apt update && sudo apt install -y git curl python3 python3-pip make ffmpeg tmux
     log_success "Dependencies installed"
 }
 
@@ -130,16 +84,43 @@ setup_environment() {
     [ ! -f .env ] && cp .env.example .env && log_success "Environment file created"
 }
 
-build_project() {
+create_tmux_session() {
+    if ! tmux has-session -t "$TMUX_SESSION" 2>/dev/null; then
+        log_info "Creating new tmux session: $TMUX_SESSION"
+        tmux new-session -d -s "$TMUX_SESSION"
+        log_success "Tmux session created"
+    else
+        log_info "Tmux session already exists"
+    fi
+}
+
+build_and_start() {
     gum spin --spinner dot --title "Installing project dependencies..." -- \
         pnpm clean && pnpm install --no-frozen-lockfile
     log_success "Dependencies installed"
 
     gum spin --spinner dot --title "Building project..." -- pnpm build
     log_success "Project built successfully"
+
+    log_info "Starting Eliza services in tmux session..."
+    tmux send-keys -t "$TMUX_SESSION" "cd $(pwd)" C-m
+    tmux send-keys -t "$TMUX_SESSION" "export NVM_DIR=\"$HOME/.nvm\"" C-m
+    tmux send-keys -t "$TMUX_SESSION" "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"" C-m
+    tmux send-keys -t "$TMUX_SESSION" "nvm use eliza" C-m
+    tmux send-keys -t "$TMUX_SESSION" "pnpm start & pnpm start:client" C-m
+
+    sleep 5
+
+    if command -v xdg-open >/dev/null 2>&1; then
+        xdg-open "http://localhost:5173"
+    elif command -v open >/dev/null 2>&1; then
+        open "http://localhost:5173"
+    else
+        log_info "Please open http://localhost:5173 in your browser"
+    fi
 }
 
-run_installer() {
+main() {
     install_gum
     show_welcome
     
@@ -149,40 +130,18 @@ run_installer() {
     fi
 
     install_dependencies
-    setup_tmux
     install_nvm
     setup_node
     clone_repository
     setup_environment
-    build_project
+    create_tmux_session
+    build_and_start
 
-    # Start Eliza
-    pnpm start
-}
-
-main() {
-    # Kill existing session if it exists
-    tmux kill-session -t eliza 2>/dev/null || true
-    
-    # Start new tmux session
-    tmux new-session -d -s eliza -n Eliza
-    
-    # Run the installer in tmux
-    tmux send-keys -t eliza "cd $(pwd)" C-m
-    tmux send-keys -t eliza "./setup.sh --in-tmux" C-m
-
-    # Show instructions
     gum style --border double --align center --width 50 --margin "1 2" --padding "1 2" \
-        "🎉 Installation Started!" "" \
-        "The installation is running in a tmux session." "" \
-        "To view the installation progress, run:" "tmux attach-session -t eliza" "" \
-        "You can detach from the session with: Ctrl-a d" "" \
-        "Eliza will continue running after you detach."
-
-    # If we're already in tmux, run the installer directly
-    if [ "$1" = "--in-tmux" ]; then
-        run_installer
-    fi
+        "🎉 Installation Complete!" "" "Eliza is now running in tmux session: $TMUX_SESSION" "" \
+        "To attach to the session:" "tmux attach -t $TMUX_SESSION" "" \
+        "To detach from session:" "Press Ctrl+b then d" "" \
+        "Eliza is available at:" "http://localhost:5173"
 }
 
 main "$@"
