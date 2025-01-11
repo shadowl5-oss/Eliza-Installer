@@ -20,7 +20,7 @@ The installer will:
 If using WSL2 on Windows, make sure you have it installed and set up:
 1. Open PowerShell as Administrator and run:
    ```powershell
-   wsl --install
+   wsl
    ```
 2. Restart your computer if prompted
 
