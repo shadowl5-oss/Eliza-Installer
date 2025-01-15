@@ -1,5 +1,7 @@
 # Eliza Installer
 
+> **Important Notice**: This installer has been [merged](https://github.com/elizaOS/eliza/commit/fd438db6ea42155ac08306c6bd86244618fa6df5) with the development branch of the main [Eliza repository](https://github.com/elizaOS/eliza). Once the changes are moved to the main branch, this repository will be maintained strictly for archival purposes.
+
 A CLI tool to easily install and set up the [Eliza](https://github.com/elizaOS/eliza) chatbot on Linux systems.
 
 ## Prerequisites
